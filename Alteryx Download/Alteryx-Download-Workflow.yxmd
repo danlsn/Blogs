@@ -1,0 +1,492 @@
+<?xml version="1.0"?>
+<AlteryxDocument yxmdVer="2022.3">
+  <Nodes>
+    <Node ToolID="14">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="401" y="40" width="697" height="254" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption>Using the Formula Tool to Construct URL</Caption>
+          <Style TextColor="#314c4a" FillColor="#ffffd5" BorderColor="#ffffd5" Transparency="25" Margin="25" />
+          <Disabled value="False" />
+          <Folded value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="6">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.TextInput.TextInput">
+            <Position x="426" y="89" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <NumRows value="5" />
+              <Fields>
+                <Field name="endpoint" />
+                <Field name="page" />
+                <Field name="per_page" />
+                <Field name="order" />
+                <Field name="orderby" />
+              </Fields>
+              <Data>
+                <r>
+                  <c>https://thedataschool.com.au/wp-json/wp/v2/pages</c>
+                  <c>1</c>
+                  <c>100</c>
+                  <c>asc</c>
+                  <c>id</c>
+                </r>
+                <r>
+                  <c>https://thedataschool.com.au/wp-json/wp/v2/posts</c>
+                  <c>1</c>
+                  <c>100</c>
+                  <c>asc</c>
+                  <c>id</c>
+                </r>
+                <r>
+                  <c>https://thedataschool.com.au/wp-json/wp/v2/categories</c>
+                  <c>1</c>
+                  <c>100</c>
+                  <c>asc</c>
+                  <c>id</c>
+                </r>
+                <r>
+                  <c>https://thedataschool.com.au/wp-json/wp/v2/tags</c>
+                  <c>1</c>
+                  <c>100</c>
+                  <c>asc</c>
+                  <c>id</c>
+                </r>
+                <r>
+                  <c>https://thedataschool.com.au/wp-json/wp/v2/users</c>
+                  <c>1</c>
+                  <c>100</c>
+                  <c>asc</c>
+                  <c>id</c>
+                </r>
+              </Data>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name>Request URLs</Name>
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxTextInput" />
+        </Node>
+        <Node ToolID="7">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+            <Position x="570" y="89" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <FormulaFields>
+                <FormulaField expression="[endpoint] &#xA;+ &quot;?page=&quot; + ToString([page]) &#xA;+ &quot;&amp;perpage=&quot; + ToString([per_page]) &#xA;+ &quot;&amp;orderby=&quot; + [orderby] &#xA;+ &quot;&amp;order=&quot; + [order]" field="url" size="2147483647" type="V_String" />
+              </FormulaFields>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText>url = [endpoint] 
++ "?page=" + ToString([page]) 
++ "&amp;perpage=" + ToString([per_p...</DefaultAnnotationText>
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+        </Node>
+        <Node ToolID="8">
+          <GuiSettings Plugin="AlteryxConnectorGui.Download.Download">
+            <Position x="714" y="90" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <URLField>endpoint</URLField>
+              <OutputMode>String</OutputMode>
+              <CodePage>65001</CodePage>
+              <EncodeURLs value="True" />
+              <Headers>
+                <NameValues />
+                <Fields orderChanged="False">
+                  <Field name="endpoint" selected="False" />
+                  <Field name="page" selected="False" />
+                  <Field name="per_page" selected="False" />
+                  <Field name="order" selected="False" />
+                  <Field name="orderby" selected="False" />
+                  <Field name="url" selected="False" />
+                  <Field name="*Unknown" selected="False" />
+                </Fields>
+              </Headers>
+              <Payload>
+                <HTTPAction>GET</HTTPAction>
+                <QueryStringBodyMode>Compose</QueryStringBodyMode>
+                <ComposeNameValues />
+                <ComposeFields orderChanged="False">
+                  <Field name="endpoint" selected="False" />
+                  <Field name="page" selected="False" />
+                  <Field name="per_page" selected="False" />
+                  <Field name="order" selected="False" />
+                  <Field name="orderby" selected="False" />
+                  <Field name="url" selected="False" />
+                  <Field name="*Unknown" selected="False" />
+                </ComposeFields>
+              </Payload>
+              <numConnections>2</numConnections>
+              <Timeout>600</Timeout>
+              <EnableRPM value="False" />
+              <DcmAdvancedAuth value="False" />
+              <Password />
+              <UserName />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxConnectorEngine.dll" EngineDllEntryPoint="AlteryxDownload" />
+        </Node>
+        <Node ToolID="9">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.JSONParse.JSONParse">
+            <Position x="858" y="90" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <JSON_Field>DownloadData</JSON_Field>
+              <IncludeInOutput value="False" />
+              <SingleField value="True" />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJSONParse" />
+        </Node>
+        <Node ToolID="10">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="1014" y="90" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <TempFile>C:\Users\DANIEL~1\AppData\Local\Temp\Engine_6024_ce6181cf9f50bc4d9934ed10f173ad39_\Engine_6024_1bc83541c9483643bdae0271d6104ab3~.yxdb</TempFile>
+              <TempFileDataProfiling />
+              <Layout>
+                <ViewMode>Single</ViewMode>
+                <ViewSize value="100" />
+                <View1>
+                  <DefaultTab>Profile</DefaultTab>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+                <View2 />
+              </Layout>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+        <Node ToolID="15">
+          <GuiSettings Plugin="AlteryxGuiToolkit.TextBox.TextBox">
+            <Position x="426" y="258" width="636" height="12" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Text />
+              <Font name="JetBrains Mono Medium" size="8.25" style="0" />
+              <TextColor name="Black" />
+              <FillColor r="255" g="255" b="213" />
+              <Shape shape="1" />
+              <Justification Justification="4" />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+        </Node>
+      </ChildNodes>
+    </Node>
+    <Node ToolID="13">
+      <GuiSettings Plugin="AlteryxGuiToolkit.ToolContainer.ToolContainer">
+        <Position x="53" y="449" width="541" height="158" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Caption>Simpler Approach</Caption>
+          <Style TextColor="#314c4a" FillColor="#aaffff" BorderColor="#aaffff" Transparency="25" Margin="25" />
+          <Disabled value="False" />
+          <Folded value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <ChildNodes>
+        <Node ToolID="4">
+          <GuiSettings Plugin="AlteryxConnectorGui.Download.Download">
+            <Position x="222" y="498" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <URLField>endpoint</URLField>
+              <OutputMode>String</OutputMode>
+              <CodePage>65001</CodePage>
+              <EncodeURLs value="True" />
+              <Headers>
+                <NameValues />
+                <Fields orderChanged="False">
+                  <Field name="endpoint" selected="False" />
+                  <Field name="page" selected="False" />
+                  <Field name="per_page" selected="False" />
+                  <Field name="order" selected="False" />
+                  <Field name="orderby" selected="False" />
+                  <Field name="*Unknown" selected="False" />
+                </Fields>
+              </Headers>
+              <Payload>
+                <HTTPAction>GET</HTTPAction>
+                <QueryStringBodyMode>Compose</QueryStringBodyMode>
+                <ComposeNameValues />
+                <ComposeFields orderChanged="False">
+                  <Field name="page" />
+                  <Field name="per_page" />
+                  <Field name="order" />
+                  <Field name="orderby" />
+                  <Field name="endpoint" selected="False" />
+                  <Field name="*Unknown" selected="False" />
+                </ComposeFields>
+              </Payload>
+              <numConnections>2</numConnections>
+              <Timeout>600</Timeout>
+              <EnableRPM value="False" />
+              <DcmAdvancedAuth value="False" />
+              <Password />
+              <UserName />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxConnectorEngine.dll" EngineDllEntryPoint="AlteryxDownload" />
+        </Node>
+        <Node ToolID="11">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.JSONParse.JSONParse">
+            <Position x="366" y="498" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <JSON_Field>DownloadData</JSON_Field>
+              <IncludeInOutput value="False" />
+              <SingleField value="True" />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxJSONParse" />
+        </Node>
+        <Node ToolID="12">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+            <Position x="510" y="498" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <TempFile>C:\Users\DANIEL~1\AppData\Local\Temp\Engine_6024_ce6181cf9f50bc4d9934ed10f173ad39_\Engine_6024_6c104e12300a644d8432ec586274af50~.yxdb</TempFile>
+              <TempFileDataProfiling />
+              <Layout>
+                <ViewMode>Single</ViewMode>
+                <ViewSize value="100" />
+                <View1>
+                  <DefaultTab>Profile</DefaultTab>
+                  <Hints>
+                    <Table />
+                  </Hints>
+                </View1>
+                <View2 />
+              </Layout>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+        </Node>
+        <Node ToolID="16">
+          <GuiSettings Plugin="AlteryxGuiToolkit.TextBox.TextBox">
+            <Position x="78" y="570" width="480" height="12" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <Text />
+              <Font name="JetBrains Mono Medium" size="8.25" style="0" />
+              <TextColor name="Black" />
+              <FillColor r="170" g="255" b="255" />
+              <Shape shape="1" />
+              <Justification Justification="4" />
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+        </Node>
+        <Node ToolID="17">
+          <GuiSettings Plugin="AlteryxBasePluginsGui.TextInput.TextInput">
+            <Position x="78" y="498" />
+          </GuiSettings>
+          <Properties>
+            <Configuration>
+              <NumRows value="5" />
+              <Fields>
+                <Field name="endpoint" />
+                <Field name="page" />
+                <Field name="per_page" />
+                <Field name="order" />
+                <Field name="orderby" />
+              </Fields>
+              <Data>
+                <r>
+                  <c>https://thedataschool.com.au/wp-json/wp/v2/pages</c>
+                  <c>1</c>
+                  <c>100</c>
+                  <c>asc</c>
+                  <c>id</c>
+                </r>
+                <r>
+                  <c>https://thedataschool.com.au/wp-json/wp/v2/posts</c>
+                  <c>1</c>
+                  <c>100</c>
+                  <c>asc</c>
+                  <c>id</c>
+                </r>
+                <r>
+                  <c>https://thedataschool.com.au/wp-json/wp/v2/categories</c>
+                  <c>1</c>
+                  <c>100</c>
+                  <c>asc</c>
+                  <c>id</c>
+                </r>
+                <r>
+                  <c>https://thedataschool.com.au/wp-json/wp/v2/tags</c>
+                  <c>1</c>
+                  <c>100</c>
+                  <c>asc</c>
+                  <c>id</c>
+                </r>
+                <r>
+                  <c>https://thedataschool.com.au/wp-json/wp/v2/users</c>
+                  <c>1</c>
+                  <c>100</c>
+                  <c>asc</c>
+                  <c>id</c>
+                </r>
+              </Data>
+            </Configuration>
+            <Annotation DisplayMode="0">
+              <Name />
+              <DefaultAnnotationText />
+              <Left value="False" />
+            </Annotation>
+          </Properties>
+          <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxTextInput" />
+        </Node>
+      </ChildNodes>
+    </Node>
+  </Nodes>
+  <Connections>
+    <Connection>
+      <Origin ToolID="6" Connection="Output" />
+      <Destination ToolID="7" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="7" Connection="Output" />
+      <Destination ToolID="8" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="8" Connection="Output" />
+      <Destination ToolID="9" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="9" Connection="Output" />
+      <Destination ToolID="10" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="4" Connection="Output" />
+      <Destination ToolID="11" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="11" Connection="Output" />
+      <Destination ToolID="12" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="17" Connection="Output" />
+      <Destination ToolID="4" Connection="Input" />
+    </Connection>
+  </Connections>
+  <Properties>
+    <Memory default="True" />
+    <GlobalRecordLimit value="0" />
+    <TempFiles default="True" />
+    <Annotation on="True" includeToolName="False" />
+    <ConvErrorLimit value="10" />
+    <ConvErrorLimit_Stop value="False" />
+    <CancelOnError value="False" />
+    <DisableBrowse value="False" />
+    <EnablePerformanceProfiling value="False" />
+    <RunWithE2 value="True" />
+    <PredictiveToolsCodePage value="1252" />
+    <DisableAllOutput value="False" />
+    <ShowAllMacroMessages value="False" />
+    <ShowConnectionStatusIsOn value="True" />
+    <ShowConnectionStatusOnlyWhenRunning value="True" />
+    <ZoomLevel value="0" />
+    <LayoutType>Horizontal</LayoutType>
+    <MetaInfo>
+      <NameIsFileName value="True" />
+      <Name>Alteryx-Download-Workflow</Name>
+      <Description />
+      <RootToolName />
+      <ToolVersion />
+      <ToolInDb value="False" />
+      <CategoryName />
+      <SearchTags />
+      <Author />
+      <Company />
+      <Copyright />
+      <DescriptionLink actual="" displayed="" />
+      <Example>
+        <Description />
+        <File />
+      </Example>
+      <WorkflowId value="9d7680d8-d5a7-4188-bdfe-d97dddbae3ec" />
+      <Telemetry>
+        <PreviousWorkflowId value="08e0d996-3e0b-41d7-b7ca-e1b2be53a2e3" />
+        <OriginWorkflowId value="08e0d996-3e0b-41d7-b7ca-e1b2be53a2e3" />
+      </Telemetry>
+    </MetaInfo>
+    <Events>
+      <Enabled value="True" />
+    </Events>
+  </Properties>
+</AlteryxDocument>

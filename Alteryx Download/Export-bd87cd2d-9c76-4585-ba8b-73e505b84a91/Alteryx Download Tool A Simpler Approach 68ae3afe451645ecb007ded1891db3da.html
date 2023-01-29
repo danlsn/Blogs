@@ -1,0 +1,675 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Alteryx Download Tool: A Simpler Approach</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="68ae3afe-4516-45ec-b007-ded1891db3da" class="page sans"><header><h1 class="page-title">Alteryx Download Tool: A Simpler Approach</h1><table class="properties"><tbody><tr class="property-row property-row-status"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesStatus"><path d="M8.75488 1.02344C8.75488 0.613281 8.41309 0.264648 8.00293 0.264648C7.59277 0.264648 7.25098 0.613281 7.25098 1.02344V3.11523C7.25098 3.51855 7.59277 3.86719 8.00293 3.86719C8.41309 3.86719 8.75488 3.51855 8.75488 3.11523V1.02344ZM3.91504 5.0293C4.20215 5.31641 4.69434 5.32324 4.97461 5.03613C5.26855 4.74902 5.26855 4.25684 4.98145 3.96973L3.53906 2.52051C3.25195 2.2334 2.7666 2.21973 2.47949 2.50684C2.19238 2.79395 2.18555 3.28613 2.47266 3.57324L3.91504 5.0293ZM10.9629 4.01758C10.6826 4.30469 10.6826 4.79688 10.9697 5.08398C11.2568 5.37109 11.749 5.36426 12.0361 5.07715L13.4854 3.62793C13.7725 3.34082 13.7725 2.84863 13.4785 2.55469C13.1982 2.27441 12.7061 2.27441 12.4189 2.56152L10.9629 4.01758ZM15.0234 8.78906C15.4336 8.78906 15.7822 8.44727 15.7822 8.03711C15.7822 7.62695 15.4336 7.28516 15.0234 7.28516H12.9385C12.5283 7.28516 12.1797 7.62695 12.1797 8.03711C12.1797 8.44727 12.5283 8.78906 12.9385 8.78906H15.0234ZM0.975586 7.28516C0.56543 7.28516 0.223633 7.62695 0.223633 8.03711C0.223633 8.44727 0.56543 8.78906 0.975586 8.78906H3.07422C3.48438 8.78906 3.83301 8.44727 3.83301 8.03711C3.83301 7.62695 3.48438 7.28516 3.07422 7.28516H0.975586ZM12.0361 10.9902C11.749 10.71 11.2568 10.71 10.9629 10.9971C10.6826 11.2842 10.6826 11.7764 10.9697 12.0635L12.4258 13.5127C12.7129 13.7998 13.2051 13.793 13.4922 13.5059C13.7793 13.2256 13.7725 12.7266 13.4854 12.4395L12.0361 10.9902ZM2.52051 12.4395C2.22656 12.7266 2.22656 13.2188 2.50684 13.5059C2.79395 13.793 3.28613 13.7998 3.57324 13.5127L5.02246 12.0703C5.31641 11.7832 5.31641 11.291 5.03613 11.0039C4.74902 10.7168 4.25684 10.71 3.96973 10.9971L2.52051 12.4395ZM8.75488 12.9658C8.75488 12.5557 8.41309 12.207 8.00293 12.207C7.59277 12.207 7.25098 12.5557 7.25098 12.9658V15.0576C7.25098 15.4609 7.59277 15.8096 8.00293 15.8096C8.41309 15.8096 8.75488 15.4609 8.75488 15.0576V12.9658Z"></path></svg></span>Status</th><td><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>In progress</span></td></tr><tr class="property-row property-row-person"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesPerson"><path d="M10.9536 7.90088C12.217 7.90088 13.2559 6.79468 13.2559 5.38525C13.2559 4.01514 12.2114 2.92017 10.9536 2.92017C9.70142 2.92017 8.65137 4.02637 8.65698 5.39087C8.6626 6.79468 9.69019 7.90088 10.9536 7.90088ZM4.4231 8.03003C5.52368 8.03003 6.42212 7.05859 6.42212 5.83447C6.42212 4.63843 5.51245 3.68945 4.4231 3.68945C3.33374 3.68945 2.41846 4.64966 2.41846 5.84009C2.42407 7.05859 3.32251 8.03003 4.4231 8.03003ZM1.37964 13.168H5.49561C4.87231 12.292 5.43384 10.6074 6.78711 9.51807C6.18628 9.14746 5.37769 8.87231 4.4231 8.87231C1.95239 8.87231 0.262207 10.6917 0.262207 12.1628C0.262207 12.7974 0.548584 13.168 1.37964 13.168ZM7.50024 13.168H14.407C15.4009 13.168 15.7322 12.8423 15.7322 12.2864C15.7322 10.8489 13.8679 8.88354 10.9536 8.88354C8.04492 8.88354 6.17505 10.8489 6.17505 12.2864C6.17505 12.8423 6.50635 13.168 7.50024 13.168Z"></path></svg></span>Assign</th><td></td></tr><tr class="property-row property-row-url"><th><span class="icon property-icon"><svg viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesUrl"><path d="M7.69922 10.8945L8.73828 9.84863C7.91797 9.77344 7.34375 9.51367 6.91992 9.08984C5.76465 7.93457 5.76465 6.29395 6.91309 5.14551L9.18262 2.87598C10.3379 1.7207 11.9717 1.7207 13.127 2.87598C14.2891 4.04492 14.2822 5.67188 13.1338 6.82031L11.958 7.99609C12.1768 8.49512 12.2451 9.10352 12.1289 9.62988L14.0908 7.6748C15.7725 6 15.7793 3.62109 14.084 1.92578C12.3887 0.223633 10.0098 0.237305 8.33496 1.91211L5.95605 4.29785C4.28125 5.97266 4.26758 8.35156 5.96289 10.0469C6.36621 10.4434 6.90625 10.7441 7.69922 10.8945ZM8.30078 5.13184L7.26855 6.17773C8.08203 6.25293 8.66309 6.51953 9.08008 6.93652C10.2422 8.09863 10.2422 9.73242 9.08691 10.8809L6.81738 13.1504C5.66211 14.3057 4.03516 14.3057 2.87305 13.1504C1.71094 11.9883 1.71777 10.3545 2.87305 9.20605L4.04199 8.03027C3.83008 7.53125 3.75488 6.92969 3.87109 6.39648L1.91602 8.35156C0.234375 10.0264 0.227539 12.4121 1.92285 14.1074C3.61816 15.8027 5.99707 15.7891 7.67188 14.1143L10.0439 11.7354C11.7256 10.0537 11.7324 7.6748 10.0371 5.98633C9.64062 5.58301 9.10059 5.28223 8.30078 5.13184Z"></path></svg></span>URL</th><td></td></tr></tbody></table></header><div class="page-body"><h2 id="af396d98-8ff3-4d8e-b4d9-fc87358f0f22" class="">Preamble</h2><p id="edef46d5-cb1c-49b7-a5fd-734e352fc2cc" class="">Parsing API Responses in Alteryx is a staple of the data analytics process, and the tool that enables is, the <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Download Tool</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong> is key.</p><p id="02adf4ac-2524-4d54-a231-5beca5b4cf5a" class="">If you’ve had experience working with APIs then you might have use the <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Formula Tool</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong> to compose URLs before downloading them.</p><p id="87bea37d-9ef9-49a8-9103-0923cfeedf12" class="">If you have then this blog post is for you, because today I will introduce you to a simpler method for achieving the same thing.</p><p id="aa6a612f-8214-45ec-ab9d-a900cd6fa45a" class="">This is a technique I use <em><strong><em><strong><em><strong><em><strong><em><strong>every</strong></em></strong></em></strong></em></strong></em></strong></em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em> time </em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em>I use the <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Download Tool</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong> in Alteryx.</p><h2 id="2322fbfb-fdab-4adb-83eb-928671a757a3" class="">The WordPress API</h2><p id="ad1e1c36-0024-47dc-9c06-cc67e10dec21" class="">The API we will be using for this blog post is the WordPress API which provides endpoints for all WordPress websites by default. The API provides the following endpoints for accessing data about a website:</p><table id="2ee99efa-b8cb-4190-87f7-c09909874002" class="simple-table"><tbody><tr id="8895ed2b-ac98-4094-9797-5892c00da913"><td id="nm}z" class="" style="width:349px">Resource</td><td id="&gt;OfU" class="" style="width:349px">Base Route</td></tr><tr id="0d4cc9f6-8f2d-4d73-a4e6-73613d316394"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/posts/">Posts</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/posts</code></td></tr><tr id="0e4e8067-c780-406b-99ff-a1087fc0791a"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/post-revisions/">Post Revisions</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/posts/&lt;id&gt;/revisions</code></td></tr><tr id="42bbf3bd-c108-4a0e-8327-f0374d80263f"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/categories/">Categories</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/categories</code></td></tr><tr id="6c16106d-cb77-4aad-868e-db3e8ce9250a"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/tags/">Tags</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/tags</code></td></tr><tr id="0b57537b-1c9b-42e5-84b2-60a5547a8128"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/pages/">Pages</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/pages</code></td></tr><tr id="24b5b277-ba67-4c75-83e6-2ca601f411f6"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/page-revisions/">Page Revisions</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/pages/&lt;id&gt;/revisions</code></td></tr><tr id="d9eb55b1-607b-4477-9946-120f44f5a397"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/comments/">Comments</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/comments</code></td></tr><tr id="93f6995b-9c2b-4b0a-9e80-3e868f4fc0d8"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/taxonomies/">Taxonomies</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/taxonomies</code></td></tr><tr id="3b3e0b25-2dc8-47f8-aac9-0de2f33724e0"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/media/">Media</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/media</code></td></tr><tr id="c1d44485-673c-42eb-a4d2-2a550d7a6341"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/users/">Users</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/users</code></td></tr><tr id="3c185fa9-0904-4fcc-a312-94e65f5bb9fe"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/post-types/">Post Types</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/types</code></td></tr><tr id="72482e82-e8b7-4125-8456-8fc393f7aa13"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/post-statuses/">Post Statuses</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/statuses</code></td></tr><tr id="df1c82fd-c39d-4b91-bb0b-e9a1ead0d86d"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/settings/">Settings</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/settings</code></td></tr><tr id="9c336204-e927-4c51-974e-33a0e12a4b04"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/themes/">Themes</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/themes</code></td></tr><tr id="4d3c5fe7-433b-4d75-a9f7-76d4af04031e"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/search-results/">Search</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/search</code></td></tr><tr id="47def335-27ba-4326-8eb4-c39d80ef54c6"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/block-types/">Block Types</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/block-types</code></td></tr><tr id="ee426cee-1a64-4539-b98f-92cbe9b78c04"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/blocks/">Blocks</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/blocks</code></td></tr><tr id="56561501-f790-472c-b5b6-fbef4eb66307"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/block-revisions/">Block Revisions</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/blocks/&lt;id&gt;/autosaves/</code></td></tr><tr id="bf99813c-2d1a-441a-bd46-354714e1daba"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/rendered-blocks/">Block Renderer</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/block-renderer</code></td></tr><tr id="e0034080-d8ab-4648-a4b2-91f3f9dbf76c"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/block-directory-items/">Block Directory Items</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/block-directory/search</code></td></tr><tr id="7c7a807b-1c4e-4007-8522-51a4683e2c0b"><td id="nm}z" class="" style="width:349px"><a href="https://developer.wordpress.org/rest-api/reference/plugins/">Plugins</a></td><td id="&gt;OfU" class="" style="width:349px"><code>/wp/v2/plugins</code></td></tr></tbody></table><p id="aa1491e4-7658-47fc-a896-f9870f18fd5a" class="">This blog, that you’re reading now, has been made using wordpress, and therefore, is accessible using the endpoints above; you just have to add <code><a href="https://thedataschool.com.au/wp-json/">https://thedataschool.com.au/wp-json/</a></code> to the front of the endpoints first.</p><h2 id="7fb7ccb6-6112-4823-972e-8ec3c03510a0" class="">Querying the WP API Using Alteryx</h2><p id="010d366c-f191-4dba-a05a-fe2219574e04" class="">As part of our training we’re taught how to interact with APIs using Alteryx. We use the <strong>Download Tool</strong> to do this, and construct the request URL using the <strong>Formula Tool</strong>. </p><p id="c18cea3a-c75f-4eb3-b0c8-4e87112a0731" class="">The request URL we need to give the <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Download Tool</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong> should be formatted like this:</p><pre id="cffbdb16-b40b-4a39-8572-6b1b313d0ae0" class="code"><code>https://thedataschool.com.au/wp-json/wp/v2/pages?page=1&amp;perpage=100&amp;orderby=id&amp;order=asc</code></pre><p id="05f62a6c-74bd-4981-90e2-c517239fc27d" class="">A simple workflow using this approach looks something like this:</p><figure id="9c9fdc66-ce79-45cb-bb7c-8c21ae884b25" class="image"><a href="Alteryx%20Download%20Tool%20A%20Simpler%20Approach%2068ae3afe451645ecb007ded1891db3da/Untitled.png"><img style="width:1206px" src="Alteryx%20Download%20Tool%20A%20Simpler%20Approach%2068ae3afe451645ecb007ded1891db3da/Untitled.png"/></a></figure><p id="2d1b8913-ddc6-439d-b6d4-e2223c10c97c" class="">This is pretty simple when we’re working with a couple of parameters (everything after the ? in the URL) and it’s good enough for most purposes. The formula we use to add the parameters looks like this:</p><pre id="7a3ec68b-bc75-40a3-a626-712d0de91da7" class="code"><code>[endpoint] 
++ &quot;?page=&quot; + ToString([page]) 
++ &quot;&amp;perpage=&quot; + ToString([per_page]) 
++ &quot;&amp;orderby=&quot; + [orderby] 
++ &quot;&amp;order=&quot; + [order]</code></pre><p id="4b23d65f-e58d-4239-8c2a-29a376913e3e" class="">However, there is a simpler approach than this. Adding parameters manually by concatenating them can be prone to errors unless you’re very careful, also it isn’t very easy to edit if you need to add or remove them. </p><p id="6b4f71dd-59f9-45b6-a99c-9e55e6baa649" class="">Here’s the approach I like to use, which I believe is simpler and more flexible:</p><figure id="73e47b36-1850-4d83-b15b-019aaef10120" class="image"><a href="Alteryx%20Download%20Tool%20A%20Simpler%20Approach%2068ae3afe451645ecb007ded1891db3da/Untitled%201.png"><img style="width:937px" src="Alteryx%20Download%20Tool%20A%20Simpler%20Approach%2068ae3afe451645ecb007ded1891db3da/Untitled%201.png"/></a></figure><p id="1e24e16c-7fec-465d-8e57-202c8b592c96" class="">As you can see there is no <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Formula Tool</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong> at all in this workflow; because it simply isn’t necessary. Given the input defined below, making sure that the column names match the name of the parameter the API is expecting:</p><table id="07bff954-8261-4d3e-b060-bca2139c7bbc" class="simple-table"><tbody><tr id="9016d3ba-76ff-4451-9986-8759690c94a2"><td id="S=E;" class="" style="width:65.328125px">Record</td><td id="IpQB" class="" style="width:384.328125px">endpoint</td><td id="QBoJ" class="" style="width:53.328125px">page</td><td id="?^q\" class="" style="width:77.328125px">per_page</td><td id="\nmx" class="" style="width:55.328125px">order</td><td id="_&lt;hB" class="" style="width:70.328125px">orderby</td></tr><tr id="d8999496-5024-4e05-acae-56ec83dc1773"><td id="S=E;" class="" style="width:65.328125px">1</td><td id="IpQB" class="" style="width:384.328125px"><a href="https://thedataschool.com.au/wp-json/wp/v2/pages">https://thedataschool.com.au/wp-json/wp/v2/pages</a></td><td id="QBoJ" class="" style="width:53.328125px">1</td><td id="?^q\" class="" style="width:77.328125px">100</td><td id="\nmx" class="" style="width:55.328125px">asc</td><td id="_&lt;hB" class="" style="width:70.328125px">id</td></tr><tr id="24a04272-7c81-484f-a986-c9cb5554592b"><td id="S=E;" class="" style="width:65.328125px">2</td><td id="IpQB" class="" style="width:384.328125px"><a href="https://thedataschool.com.au/wp-json/wp/v2/posts">https://thedataschool.com.au/wp-json/wp/v2/posts</a></td><td id="QBoJ" class="" style="width:53.328125px">1</td><td id="?^q\" class="" style="width:77.328125px">100</td><td id="\nmx" class="" style="width:55.328125px">asc</td><td id="_&lt;hB" class="" style="width:70.328125px">id</td></tr><tr id="e1934ecb-d810-4e57-8fb0-baaad4807867"><td id="S=E;" class="" style="width:65.328125px">3</td><td id="IpQB" class="" style="width:384.328125px"><a href="https://thedataschool.com.au/wp-json/wp/v2/categories">https://thedataschool.com.au/wp-json/wp/v2/categories</a></td><td id="QBoJ" class="" style="width:53.328125px">1</td><td id="?^q\" class="" style="width:77.328125px">100</td><td id="\nmx" class="" style="width:55.328125px">asc</td><td id="_&lt;hB" class="" style="width:70.328125px">id</td></tr><tr id="db7b099e-84c3-45fc-b931-a69028040617"><td id="S=E;" class="" style="width:65.328125px">4</td><td id="IpQB" class="" style="width:384.328125px"><a href="https://thedataschool.com.au/wp-json/wp/v2/tags">https://thedataschool.com.au/wp-json/wp/v2/tags</a></td><td id="QBoJ" class="" style="width:53.328125px">1</td><td id="?^q\" class="" style="width:77.328125px">100</td><td id="\nmx" class="" style="width:55.328125px">asc</td><td id="_&lt;hB" class="" style="width:70.328125px">id</td></tr><tr id="b692921c-6b30-4992-83a3-394c047fe956"><td id="S=E;" class="" style="width:65.328125px">5</td><td id="IpQB" class="" style="width:384.328125px"><a href="https://thedataschool.com.au/wp-json/wp/v2/users">https://thedataschool.com.au/wp-json/wp/v2/users</a></td><td id="QBoJ" class="" style="width:53.328125px">1</td><td id="?^q\" class="" style="width:77.328125px">100</td><td id="\nmx" class="" style="width:55.328125px">asc</td><td id="_&lt;hB" class="" style="width:70.328125px">id</td></tr></tbody></table><p id="8e2a8544-9199-48f2-be1e-1a93b4e66c85" class="">If you look at the <strong><strong><strong><strong><strong><strong><strong>Payload</strong></strong></strong></strong></strong></strong></strong> tab of the <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Download Tool</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong> you will see an option to add “values from these fields” under the <em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em><em>Compose Query String/Body</em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em></em> section of the tool; as below:</p><figure id="abe84b68-ee87-4005-9405-0d98d783cc6b" class="image"><a href="Alteryx%20Download%20Tool%20A%20Simpler%20Approach%2068ae3afe451645ecb007ded1891db3da/Untitled%202.png"><img style="width:599px" src="Alteryx%20Download%20Tool%20A%20Simpler%20Approach%2068ae3afe451645ecb007ded1891db3da/Untitled%202.png"/></a></figure><p id="069b727f-07c4-4084-83ec-3e21ce591cf9" class="">By simply checking the boxes for the parameters you need, you can side-step the process of composing your query strings manually entirely.</p><h2 id="c65d56bd-2d44-4599-b88d-451e70edfe8e" class="">Closing Thoughts</h2><p id="6fc17a8d-0093-4b8e-92b5-5514fee713a2" class="">Simpler is often better, and your solutions should only be as complex as you need them to be. If you can avoid the laborious process of concatenating parameters together, you can focus on the actual parsing of the output.</p><p id="96704284-e0a0-4034-b9ab-f71d63a19881" class="">I hope that you can use this technique in your workflows, and that you focus the time-saved on even better analysis!</p><p id="ddf55f66-3d03-482d-8751-2f27fd3ff756" class="">Love,
+Dan</p><p id="14e1a9b0-a786-4118-9454-b40f2ceb1bfd" class="">
+</p></div></article></body></html>
